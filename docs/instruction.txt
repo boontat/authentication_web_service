@@ -1,0 +1,75 @@
+Instruction
+
+Create an authentication API service with Passport package from PHP Lumen framework.
+
+
+
+You will need to create a migration to insert a users table to the database.
+
+
+
+Three endpoints are required as a result of this test.
+
+1.  Register user
+
+    Endpoint: {{url}}/api/register
+
+    Body form data and rules:
+
+     - first_name: required|string
+
+     - last_name: required|string
+
+     - email: required|email|unique
+
+     - password: required|password
+
+     - age: string
+
+
+
+Note: It's an endpoint to register a user. Unique email checking is required.
+
+
+
+2.  Login user
+
+    Endpoint: {{url}}/api/login
+
+    Body form data and rules:
+
+         - email: required|email
+
+         - password: required|password
+
+
+
+Note: It's an endpoint to log in a user. Email existence and invalid password checking are required. This endpoint should return an auth token and user details.
+
+
+
+3.  Get user details
+
+    Endpoint: {{url}}/api/users/{{user_id}}
+
+    Auth: Bearer {{auth_token}}
+
+
+
+Note: It's an endpoint to retrieve user details. Valid auth token checking is required. Please create a middleware to verify auth token and apply it to this endpoint.
+
+
+
+Please complete this within 2-3 days and commit your work to your own git repository and provide us the link once you are done.
+
+
+
+If possible, please attach Postman screenshots for above endpoint results in your repository.
+
+
+
+If you need more time, please do let us know.
+
+
+
+PS: No frontend interface needed and it'd be great if you are able to deploy this service into your own hosting and provide us a public link. Anyway, this is optional.
