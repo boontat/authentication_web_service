@@ -19,5 +19,5 @@ $router->post('api/register', 'UserController@register');
 $router->post('api/login', 'UserController@login');
 
 $router->group(['prefix' => 'api', 'middleware' => 'client'], function() use (&$router){
-    $router->post('api/details', 'UserController@details');
+    $router->post('details', 'UserController@details');
 });

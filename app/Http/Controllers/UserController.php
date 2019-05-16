@@ -77,13 +77,7 @@ class UserController extends Controller
 
             return response()->json(
                 [
-                    'user' => [
-                        'id' => $user->id,
-                        'first_name' => $user->first_name,
-                        'last_name' => $user->last_name,
-                        'email' => $user->email,
-                        'age' => $user->age
-                    ],
+                    'user' => $user,
                     'access_token' => $token
 
                 ],
@@ -95,5 +89,14 @@ class UserController extends Controller
                 401
             );
         }
+    }
+
+    public function details()
+    {
+        $user = Auth::user();
+        return response()->json(
+            ['user' => $user],
+            200
+        );
     }
 }
