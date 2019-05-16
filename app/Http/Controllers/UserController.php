@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use Validator;
 use Illuminate\Http\Request as Request;
+use Illuminate\Support\Facades\Auth as Auth;
 use App\User;
-
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -37,11 +38,62 @@ class UserController extends Controller
         $data['password'] = $request->input('password');
         $data['age'] = $request->input('age');
 
-        User::create($data);
+        $user = User::create($data);
 
-        $success['token'] = '';
+        // $message = 'User created';
 
-        return response()->json(['success'=> $success], $this->successStatus);
+        return response()->json(
+            ['user'=> [
+                'id' => $user->id,
+                'email' => $user->email
+            ]],
+            201 // created
+        );
 
+    }
+
+    /**
+     * Login user
+     *
+     * @return void
+     */
+    public function login (Request $request) {
+        $this->validate($request, [
+            'email' => 'required|email',
+            'password' => 'required'
+        ]);
+
+        $user = User::where('email', $request->input('email'))->first();
+
+        if (empty($user)) {
+            return response()->json(
+                ['error'=>'Email not found'],
+                401
+            );
+        }
+
+        if(Hash::check($request->input('password'), $user->password)){
+            $token =  $user->createToken('authentication_api')-> accessToken;
+
+            return response()->json(
+                [
+                    'user' => [
+                        'id' => $user->id,
+                        'first_name' => $user->first_name,
+                        'last_name' => $user->last_name,
+                        'email' => $user->email,
+                        'age' => $user->age
+                    ],
+                    'access_token' => $token
+
+                ],
+                '200'
+            );
+        } else{
+            return response()->json(
+                ['error'=>'Invalid password'],
+                401
+            );
+        }
     }
 }

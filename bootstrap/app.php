@@ -21,11 +21,18 @@ $app = new Laravel\Lumen\Application(
     dirname(__DIR__)
 );
 
+$app->instance('path.config', app()->basePath() . DIRECTORY_SEPARATOR . 'config');
+$app->instance('path.storage', app()->basePath() . DIRECTORY_SEPARATOR . 'storage');
+
 // enable Facades
 $app->withFacades();
 
 // Enable eloquent
 $app->withEloquent();
+
+$app->bind(\Illuminate\Contracts\Routing\UrlGenerator::class, function ($app) {
+    return new \Laravel\Lumen\Routing\UrlGenerator($app);
+});
 
 // Enabled custom config
 $app->configure('auth');
@@ -69,6 +76,7 @@ $app->singleton(
 // Enable auth middleware
 $app->routeMiddleware([
     'auth' => App\Http\Middleware\Authenticate::class,
+    // 'client' => \Laravel\Passport\Http\Middleware\CheckClientCredentials::class,
 ]);
 
 /*
@@ -82,15 +90,15 @@ $app->routeMiddleware([
 |
 */
 
-// Register two service providers
-// 1. original laravel\passport
-// 2. custom dusterio\lumenpassport
+$app->register(App\Providers\AppServiceProvider::class);
+$app->register(App\Providers\AuthServiceProvider::class);
+$app->register(App\Providers\EventServiceProvider::class);
+
+// custom registration
 $app->register(Laravel\Passport\PassportServiceProvider::class);
 $app->register(Dusterio\LumenPassport\PassportServiceProvider::class);
+Dusterio\LumenPassport\LumenPassport::routes($app->router, ['prefix' => 'api/v1/oauth'] );
 
-// $app->register(App\Providers\AppServiceProvider::class);
-// $app->register(App\Providers\AuthServiceProvider::class);
-// $app->register(App\Providers\EventServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------
