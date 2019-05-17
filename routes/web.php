@@ -11,13 +11,18 @@
 |
 */
 
-$router->get('/', function () use ($router) {
-    return $router->app->version();
-});
+// not use
+// $router->get('/', function () use ($router) {
+//     return $router->app->version();
+// });
 
+// register endpoint
 $router->post('api/register', 'UserController@register');
+
+// login endpoint
 $router->post('api/login', 'UserController@login');
 
+// Other endpoiont that should be wrapped with access_token
 $router->group(['prefix' => 'api', 'middleware' => 'client'], function() use (&$router){
-    $router->post('details', 'UserController@details');
+    $router->post('details', 'UserController@usersDetails');
 });

@@ -10,16 +10,15 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    // indicate success status code
-    private $successStatus = 200;
-
     /**
      * Register a new user
      *
+     * @param Request $request
+     * @return Response
      */
     public function register(Request $request)
     {
-        // validate
+        // validate register request
         $validator = Validator::make($request->all(), [
             'first_name' => 'required',
             'last_name' => 'required',
@@ -27,6 +26,7 @@ class UserController extends Controller
             'password' => 'required'
         ]);
 
+        // block when validator check failed
         if ($validator->fails()) {
             return response()->json(['error'=>$validator->errors()], 401);
         }
@@ -55,7 +55,8 @@ class UserController extends Controller
     /**
      * Login user
      *
-     * @return void
+     * @param Request $request
+     * @return Response
      */
     public function login (Request $request) {
         $this->validate($request, [
@@ -91,7 +92,12 @@ class UserController extends Controller
         }
     }
 
-    public function details()
+    /**
+     * Get user details
+     *
+     * @return void
+     */
+    public function usersDetails()
     {
         $user = Auth::user();
         return response()->json(

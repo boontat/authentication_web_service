@@ -1,21 +1,32 @@
-# Lumen PHP Framework
+# Authentication Web Service
 
-[![Build Status](https://travis-ci.org/laravel/lumen-framework.svg)](https://travis-ci.org/laravel/lumen-framework)
-[![Total Downloads](https://poser.pugx.org/laravel/lumen-framework/d/total.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/lumen-framework/v/stable.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/lumen-framework/v/unstable.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![License](https://poser.pugx.org/laravel/lumen-framework/license.svg)](https://packagist.org/packages/laravel/lumen-framework)
+## Goal
+Create an authentication API service with Passport package from PHP Lumen framework.
 
-Laravel Lumen is a stunningly fast PHP micro-framework for building web applications with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Lumen attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as routing, database abstraction, queueing, and caching.
+## Installation
 
-## Official Documentation
+- Get the repositories
 
-Documentation for the framework can be found on the [Lumen website](https://lumen.laravel.com/docs).
+  `$ git clone https://github.com/boontat/authentication_web_service.git`
+- Duplicate .env.example to .env and
+    - Update the database details (credential/port/host)
+    - Generate key
 
-## Security Vulnerabilities
+- Install dependencies
 
-If you discover a security vulnerability within Lumen, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+  `$ composer install`
+- Run migration
 
-## License
+  `$ php artisan migrate`
+- Install passport
 
-The Lumen framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+  `$ php artisan passport:install`
+
+## Start server
+
+`$ cd <project-root-directory>`
+
+`$ php -S localhost:8080 -t public`
+
+## Usage (Using Postman)
+see `docs/screenshot`

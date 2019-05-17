@@ -34,6 +34,12 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'password',
     ];
 
+    /**
+     * Hash password attribute before storing to database
+     *
+     * @param [string] $password
+     * @return void
+     */
     public function setPasswordAttribute($password)
     {
         $this->attributes['password'] = Hash::make($password);
